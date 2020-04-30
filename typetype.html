@@ -39,6 +39,10 @@
     }
     $(document).ready(function () {
 
+        if (localStorage.getItem("zoom") === null) {
+            localStorage.setItem("zoom", 1.0);
+        }
+
         if (localStorage.getItem("typeSpeed") === null) {
             localStorage.setItem("typeSpeed", 150);
         }
@@ -48,13 +52,17 @@
         }
 
         $("#input_text").val(localStorage.getItem("input_text"))
+        
+        $("#zoom").val(localStorage.getItem("zoom"))
         $("#typeSpeed").val(localStorage.getItem("typeSpeed"))
         $("#backDelay").val(localStorage.getItem("backDelay"))
 
         $("#to_page2").click(function () {
             localStorage.setItem("input_text", $("#input_text").val());
+            localStorage.setItem("zoom", $("#zoom").val());
             localStorage.setItem("typeSpeed", $("#typeSpeed").val());
             localStorage.setItem("backDelay", $("#backDelay").val());
+            $(".container.box").animate({'zoom':$("#zoom").val()},0)
             $("#typed-strings").html(marked($.trim($("#input_text").val())))
             $("#page1").hide();
             $("#page2").show();
@@ -78,6 +86,18 @@
         </div>
         <div class="hero-body">
             <div class="container has-text-centered">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">확대배율</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" type='number' id='zoom' placeholder="확대배율 (x)" value=1.0>
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">글자 표시 간격 (ms)</label>
